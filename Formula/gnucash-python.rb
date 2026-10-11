@@ -10,6 +10,12 @@ class GnucashPython < Formula
     strategy :github_latest
   end
 
+  bottle do
+    root_url "https://github.com/allen-ziegenfus/homebrew-gnucash/releases/download/gnucash-python-5.17"
+    rebuild 1
+    sha256 arm64_tahoe: "912eaaa70c1c277764f396adb910ca42c1b21c5a27db4fc2f706a7b8fe43b356"
+  end
+
   # The official GnuCash.app cannot ship the Python bindings (Apple's
   # notarization will not link a libpython from outside the bundle), and
   # Homebrew's `gnucash` cask is that app. This builds only libgnucash and
