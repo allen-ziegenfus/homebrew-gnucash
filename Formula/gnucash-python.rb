@@ -5,6 +5,11 @@ class GnucashPython < Formula
   sha256 "3d18a88f5b8230f01e04c2d2d73bf95e7dcd3bf8d8cee6ffa54bb24dee58b85f"
   license "GPL-2.0-or-later"
 
+  livecheck do
+    url :stable
+    strategy :github_latest
+  end
+
   # The official GnuCash.app cannot ship the Python bindings (Apple's
   # notarization will not link a libpython from outside the bundle), and
   # Homebrew's `gnucash` cask is that app. This builds only libgnucash and
