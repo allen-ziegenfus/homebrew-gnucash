@@ -52,6 +52,12 @@ class GnucashPython < Formula
     inreplace "bindings/python/CMakeLists.txt", "${Python3_LIBRARIES}",
               "-Wl,-undefined,dynamic_lookup"
 
+    # GnuCash joins its two library directories with ":" into ONE rpath,
+    # which macOS reads as a single nonexistent directory. Give it two.
+    inreplace "CMakeLists.txt",
+              'set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_FULL_LIBDIR}:${CMAKE_INSTALL_FULL_LIBDIR}/gnucash")',
+              "set(CMAKE_INSTALL_RPATH \"#{opt_lib};#{opt_lib}/gnucash\")"
+
     (buildpath/"googletest").install resource("googletest")
     ENV["GTEST_ROOT"] = buildpath/"googletest"
     icu = Formula["icu4c@78"]
@@ -67,7 +73,6 @@ class GnucashPython < Formula
       -DCMAKE_PREFIX_PATH=#{icu.opt_prefix}
       -DCMAKE_C_FLAGS=-I#{icu.opt_include}
       -DCMAKE_CXX_FLAGS=-I#{icu.opt_include}
-      -DCMAKE_INSTALL_RPATH=#{rpath};#{rpath(target: lib/"gnucash")}
     ]
     system "cmake", "-S", ".", "-B", "build", "-G", "Ninja", *args, *std_cmake_args
     system "cmake", "--build", "build"
