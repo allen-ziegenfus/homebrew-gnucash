@@ -20,6 +20,7 @@ class GnucashPython < Formula
   depends_on "ninja" => :build
   depends_on "pkgconf" => :build
   depends_on "swig" => :build
+  depends_on "bdw-gc"
   depends_on "boost"
   depends_on "gettext"
   depends_on "glib"
